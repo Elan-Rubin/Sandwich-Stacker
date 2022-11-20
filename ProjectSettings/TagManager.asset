@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Sandwich
+  - Ingredient
+  - Border
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3738733711
+    locked: 0
+  - name: Ingredients
+    uniqueID: 3421665215
+    locked: 0
+  - name: Character
+    uniqueID: 15513375
+    locked: 0
+  - name: Sandwich
+    uniqueID: 3934955253
+    locked: 0
+  - name: Crumbs
+    uniqueID: 2844769195
+    locked: 0
+  - name: UI
+    uniqueID: 1589642715
+    locked: 0

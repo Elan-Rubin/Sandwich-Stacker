@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2fde8c4404c124f81aa9e9d721f932, type: 3}
+  m_Name: Pepper
+  m_EditorClassIdentifier: 
+  BadItem: 0
+  IngredientType: 8
+  LandedSprite: {fileID: 21300000, guid: 1a56d2af4197bd9488dae314de9017bc, type: 3}
+  FallingSprites:
+  - {fileID: 21300000, guid: 14e6aa5bf42ae244caa5090358fa1b37, type: 3}
+  - {fileID: 21300000, guid: 2e5abbd511325e446b695b2aa077b7ca, type: 3}
+  - {fileID: 21300000, guid: d8b66e17128e18846aedaebc3f2c5eca, type: 3}
+  - {fileID: 21300000, guid: 5c7a9db6d32c7c343b6dc43cbe3037b2, type: 3}
+  - {fileID: 21300000, guid: 08949b0c9ce5e14499ac04453a3b6841, type: 3}
+  - {fileID: 21300000, guid: 1f1286d6ba556e24992c3f5342439ed4, type: 3}
+  - {fileID: 21300000, guid: 2ce5edafddbc06045a9ff5f95c104c5d, type: 3}
+  - {fileID: 21300000, guid: 7c7b4773f6d180b48b9c004d5811387b, type: 3}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2fde8c4404c124f81aa9e9d721f932, type: 3}
+  m_Name: Onion
+  m_EditorClassIdentifier: 
+  BadItem: 0
+  IngredientType: 7
+  LandedSprite: {fileID: 21300000, guid: 2dcd5fdd4d99e0043a61a724d17da265, type: 3}
+  FallingSprites:
+  - {fileID: 21300000, guid: a9146800ef286b84ab8874877ba73b0c, type: 3}
+  - {fileID: 21300000, guid: f27bbcf13ce6e7f47ae08288fe9fe140, type: 3}
+  - {fileID: 21300000, guid: 0c3bdca6498f5064aa4e07d8c435b577, type: 3}
+  - {fileID: 21300000, guid: 408e88225d55bee48b40c2791929d64a, type: 3}

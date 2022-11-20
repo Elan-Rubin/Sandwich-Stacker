@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2fde8c4404c124f81aa9e9d721f932, type: 3}
+  m_Name: Pickles
+  m_EditorClassIdentifier: 
+  BadItem: 0
+  IngredientType: 9
+  LandedSprite: {fileID: 21300000, guid: 1c22b52e3edd2334a874ccf230f37910, type: 3}
+  FallingSprites:
+  - {fileID: 21300000, guid: fbf856f71413c004aa6763ed3848837d, type: 3}
+  - {fileID: 21300000, guid: 3883368e07e20bc4983d36c050feaebb, type: 3}
+  - {fileID: 21300000, guid: 6921064fbc2115d4d9f8c4d4964a9083, type: 3}
+  - {fileID: 21300000, guid: af297f82268404148a490def443750ef, type: 3}

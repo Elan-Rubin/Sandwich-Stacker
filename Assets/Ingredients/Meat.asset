@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2fde8c4404c124f81aa9e9d721f932, type: 3}
+  m_Name: Meat
+  m_EditorClassIdentifier: 
+  BadItem: 0
+  IngredientType: 5
+  LandedSprite: {fileID: 21300000, guid: 7b49a06bb87ce014398bed82b9dd90c7, type: 3}
+  FallingSprites:
+  - {fileID: 21300000, guid: eccfb9f41ca3bbb41abb5810a3b5d557, type: 3}
+  - {fileID: 21300000, guid: 5400ddc62ec45f34da10b497ad3e3077, type: 3}
+  - {fileID: 21300000, guid: c2ec61188b13b824b85e22f03c8cd52d, type: 3}
+  - {fileID: 21300000, guid: 4b11c3f53922adc44ae173215dd3eb6b, type: 3}
