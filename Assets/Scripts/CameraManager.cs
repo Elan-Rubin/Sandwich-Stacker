@@ -18,15 +18,17 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public Vector3 _currentPosition, _targetPosition;
+    [SerializeField] private Vector3 _currentPosition;
+    public Vector3 CurrentPosition { get { return _currentPosition; } }
+    public Vector3 TargetPosition { get; set; }
 
     void Start()
     {
-        _currentPosition = _targetPosition = transform.position;
+        _currentPosition = TargetPosition = transform.position;
     }
 
     void Update()
     {
-        _currentPosition = transform.position = Vector3.Lerp(_currentPosition, _targetPosition, Time.deltaTime);
+        _currentPosition = transform.position = Vector3.Lerp(CurrentPosition, TargetPosition, Time.deltaTime);
     }
 }

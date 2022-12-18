@@ -1,12 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class IngredientSpawner : MonoBehaviour
 {
     [SerializeField] GameObject _ingredient;
-    private bool _spawning = true;
-    float _timer;
+    private bool _spawning = false;
+    float _timer = -1f;
     int _ingredientCounter;
 
     [SerializeField] private List<IngredientScriptableObject> _ingredients = new List<IngredientScriptableObject>();
@@ -25,7 +24,8 @@ public class IngredientSpawner : MonoBehaviour
 
     void Update()
     {
-        _timer += Time.deltaTime;
+        Debug.Log(_timer);
+        if(GameManager.Instance.InRound && _spawning) _timer += Time.deltaTime;
         if (_timer > 1f && _spawning)
         {
             _ingredientCounter++;
@@ -34,7 +34,7 @@ public class IngredientSpawner : MonoBehaviour
             var ingredientValues = (Random.Range(0f, 1f) > 0.2f)
                 ? _ingredients[Random.Range(0, _ingredients.Count)]
                 : _badIngredients[Random.Range(0, _badIngredients.Count)];
-            if(GameManager.Instance.SandwichSize > 5 && _ingredientCounter % 5 == 0)//this number will change
+            if (GameManager.Instance.SandwichSize > 5 && _ingredientCounter % 5 == 0)//this number will change
             {
                 //spawn bread animation
                 ingredientValues = _topBread;

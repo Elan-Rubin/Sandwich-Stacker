@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.Instance.InRound) return;
         bool paused = GameManager.Instance.Paused;
         List<Sprite> currentCycle = !paused ? _walkCycle : _pausedCycle;
         if (_timer > 0.1f)
