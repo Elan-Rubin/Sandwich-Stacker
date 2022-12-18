@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class IngredientSpawner : MonoBehaviour
     [SerializeField] private List<IngredientScriptableObject> _badIngredients = new List<IngredientScriptableObject>();
     [SerializeField] private IngredientScriptableObject _topBread;
 
+    [SerializeField] private GameObject _breadLauncher;
+
     void Start()
     {
 
@@ -22,9 +25,9 @@ public class IngredientSpawner : MonoBehaviour
         return _spawning = !_spawning;
     }
 
+    private bool _waiting = false;
     void Update()
     {
-        Debug.Log(_timer);
         if(GameManager.Instance.InRound && _spawning) _timer += Time.deltaTime;
         if (_timer > 1f && _spawning)
         {
@@ -36,11 +39,18 @@ public class IngredientSpawner : MonoBehaviour
                 : _badIngredients[Random.Range(0, _badIngredients.Count)];
             if (GameManager.Instance.SandwichSize > 5 && _ingredientCounter % 5 == 0)//this number will change
             {
-                //spawn bread animation
+                StartCoroutine(nameof(BreadLaunch));
                 ingredientValues = _topBread;
-                _timer = -1.5f;
+                _timer = -2.5f;
             }
             newIngredient.AssignIngredientValues(ingredientValues);
         }
+    }
+
+    private IEnumerator BreadLaunch()
+    {
+        _breadLauncher.SetActive(_waiting = true);
+        yield return new WaitForSeconds(2.2f);
+        _breadLauncher.SetActive(_waiting = false);
     }
 }

@@ -278,4 +278,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = value;
         _pausing = false;
     }
+
+    public void StallBread(GameObject bread) => StartCoroutine(nameof(StallBreadCoroutine), bread);
+
+    private IEnumerator StallBreadCoroutine(GameObject bread)
+    {
+        bread.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        bread.SetActive(true);
+    }
 }

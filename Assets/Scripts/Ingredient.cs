@@ -25,7 +25,7 @@ public class Ingredient : MonoBehaviour
 
     void Start()
     {
-        
+        if (IngredientType.Equals(IngredientType.Bread)) GameManager.Instance.StallBread(gameObject);
     }
 
     public void AssignIngredientValues(IngredientScriptableObject ingredientValues)
