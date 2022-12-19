@@ -29,7 +29,7 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        if (Vector2.Distance(_currentPosition, TargetPosition) > 0.01f)
+        if (Vector2.Distance(_currentPosition, TargetPosition) < 0.01f)
         {
             _currentPosition = TargetPosition;
             return;

@@ -24,8 +24,9 @@ public class Ingredient : MonoBehaviour
         if (IngredientType.Equals(IngredientType.Bread)) GameManager.Instance.StallBread(gameObject);
         transform.localScale = Vector2.zero;
         var sequence = DOTween.Sequence()
-            .Append(transform.DOScale(Vector3.one,0.25f))
-            .Append(transform.DOPunchScale(Vector3.one * 0.25f, 0.25f));
+            .AppendInterval(0.15f)
+            .Append(transform.DOScale(Vector3.one, 0.25f))
+            .Append(transform.DOPunchScale(Vector3.one * 0.25f, 0.35f));
     }
 
     public void AssignIngredientValues(IngredientScriptableObject ingredientValues)
@@ -75,7 +76,7 @@ public class Ingredient : MonoBehaviour
 
             foreach (Transform child in collision.transform)
                 child.GetComponent<Collider2D>().enabled = false;
-            if(collision.gameObject.GetComponent<Collider2D>()) collision.gameObject.GetComponent<Collider2D>().enabled = false;
+            if (collision.gameObject.GetComponent<Collider2D>()) collision.gameObject.GetComponent<Collider2D>().enabled = false;
             GetComponent<Rigidbody2D>().isKinematic = true;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             collision.gameObject.tag = "Untagged";

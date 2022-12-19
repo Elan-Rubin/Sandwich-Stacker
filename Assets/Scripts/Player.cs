@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
@@ -8,16 +9,17 @@ public class Player : MonoBehaviour
     public static Player Instance { get { return _instance; } }
 
     [Header("Player Movement")]
-    [Range(10,20)] [Tooltip("How fast the player moves horizontally.")]
+    [Range(10, 20)]
+    [Tooltip("How fast the player moves horizontally.")]
     [SerializeField] private float _movementSpeed = 10f;
     [Tooltip("The absolute value of the maximum x-position.")]
-    [SerializeField] private float _maximumX = 5.5f;
-    private float _minimumX;
+    [SerializeField] private float _maximumX = 6.43f;
+    [SerializeField] private float _minimumX = -5.11f;
 
     [Header("Player Visuals")]
     [Tooltip("Frames of the player's walk animation")]
-    [SerializeField] private List<Sprite> _walkCycle = new List<Sprite>();
-    [SerializeField] private List<Sprite> _pausedCycle = new List<Sprite>();
+    [SerializeField] private List<Sprite> _walkCycle = new();
+    [SerializeField] private List<Sprite> _pausedCycle = new();
     int _counter;
     float _timer;
 
@@ -38,7 +40,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        _minimumX = -_maximumX;
         _visual = transform.GetChild(0).gameObject;
         _renderer = _visual.GetComponent<SpriteRenderer>();
     }
@@ -55,7 +56,7 @@ public class Player : MonoBehaviour
             if (_counter == currentCycle.Count) _counter = 0;
             _renderer.sprite = currentCycle[_counter];
         }
-        Vector2 movementOffset = new Vector2(Input.GetAxisRaw(axisName: "Horizontal"), 0);
+        Vector2 movementOffset = new(Input.GetAxisRaw(axisName: "Horizontal"), 0);
         movementOffset *= Time.deltaTime * _movementSpeed;
         bool direction = movementOffset.x > 0; //right = true, left = false
 
@@ -73,7 +74,6 @@ public class Player : MonoBehaviour
 
     public void ResetPlayer()
     {
-        //transform.position = new Vector3(0, transform.position.y);
         var plate = transform.GetChild(1).gameObject;
         plate.GetComponent<Collider2D>().enabled = true;
         plate.tag = "Sandwich";

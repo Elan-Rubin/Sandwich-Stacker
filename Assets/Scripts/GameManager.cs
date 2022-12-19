@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _flavorText1, _flavorText2, _levelText2, _scoreText2;
     [SerializeField] private List<string> _flavorTexts1 = new();
     [SerializeField] private List<string> _flavorTexts2 = new();
+    [SerializeField] private List<string> _flavorTexts3 = new();
     private int[] _scores = new int[] { 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 150, 200, 250, 300, 350, 400, 500 };
 
     private void Awake()
@@ -114,6 +115,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator IckyOverlay()
     {
         _ickyOverlay.SetActive(true);
+        _ickyOverlay.transform.GetComponentInChildren<TextMeshProUGUI>().text = _flavorTexts3[Random.Range(0, _flavorTexts3.Count)];
         yield return new WaitForSeconds(1f);
         _ickyOverlay.SetActive(false);
     }
@@ -128,7 +130,7 @@ public class GameManager : MonoBehaviour
             delayedFlash.Append(ickMeterImage.DOColor(Color.red, 0.2f).SetEase(Ease.InExpo));
             delayedFlash.AppendInterval(0.35f);
             delayedFlash.Append(ickMeterImage.DOColor(previousColor, 0.2f).SetEase(Ease.OutExpo));
-        }    
+        }
     }
 
     public void StartRound() => StartCoroutine(nameof(StartTransition));
@@ -189,18 +191,18 @@ public class GameManager : MonoBehaviour
         int ingredientCounter = 0;
         int ingredientTotal = SandwichSize;
         sandwich.Reverse();
-        foreach(var ingredient in sandwich)
+        foreach (var ingredient in sandwich)
         {
             ingredientCounter++;
             int scoreAddition = _scores[Mathf.Clamp(ingredientCounter, 0, _scores.Length - 1)] * (_round - 1);
-            _scoreText.text = (_score += scoreAddition).ToString();
+            _scoreText.text = string.Format("{0:n0}", _score += scoreAddition);
             _scoreText.transform.DOPunchScale(Vector3.one / 10f, 0.1f);
 
             var pointsAdded = Instantiate(_pointsAdded, ingredient.transform.position + Vector3.left * (ingredientCounter % 2 != 0 ? -1 : 1), Quaternion.identity);
             pointsAdded.transform.Rotate(Vector3.forward * Random.Range(-25, 25));
             var pointsAddedText = pointsAdded.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             pointsAddedText.color = Color.clear;
-            pointsAddedText.text = "+" + scoreAddition;
+            pointsAddedText.text = "+" + string.Format("{0:n0}", scoreAddition);
             var sequence = DOTween.Sequence()
                 .Append(pointsAddedText.DOColor(Color.white, 0.5f))
                 .AppendInterval(0.75f)
@@ -212,7 +214,7 @@ public class GameManager : MonoBehaviour
             ingredient.GetComponent<Ingredient>().Explode();
             //sandwich.Remove(ingredient);
             Destroy(ingredient.gameObject);
-            if(ingredientCounter <= SandwichSize - 7 && SandwichSize >= 7) CameraManager.Instance.TargetPosition -= new Vector3(0, 0.2f, 0);
+            if (ingredientCounter <= SandwichSize - 7 && SandwichSize >= 7) CameraManager.Instance.TargetPosition -= new Vector3(0, 0.2f, 0);
             yield return new WaitForSeconds(0.25f);
         }
         //foreach (var ingredient in sandwich)
@@ -253,7 +255,7 @@ public class GameManager : MonoBehaviour
         _winPanel.SetActive(true);
         _flavorText1.text = "";
         _flavorText2.text = "";
-        _scoreText2.text = "Score: " + _score;
+        _scoreText2.text = "Score: " + string.Format("{0:n0}", _score);
         _levelText2.text = "Level " + (_round - 1);
         _flavorText1.text = _flavorTexts1[Random.Range(0, _flavorTexts1.Count)];
         _flavorText2.text = _flavorTexts2[Random.Range(0, _flavorTexts2.Count)];

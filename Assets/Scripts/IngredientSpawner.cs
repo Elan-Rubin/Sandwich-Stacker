@@ -29,7 +29,7 @@ public class IngredientSpawner : MonoBehaviour
 
     void Update()
     {
-        if(GameManager.Instance.InRound && _spawning) _timer += Time.deltaTime;
+        if (GameManager.Instance.InRound && _spawning) _timer += Time.deltaTime;
         if (_timer > _timeToWait && _spawning)
         {
             _ingredientCounter++;

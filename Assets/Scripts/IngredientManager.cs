@@ -32,7 +32,7 @@ public class IngredientManager : MonoBehaviour
     {
         if (!GameManager.Instance.InRound) return;
         Vector2 pos = _plate.PlatePosition;
-        foreach(var ingredient in _sandwich)
+        foreach (var ingredient in _sandwich)
         {
             ingredient.transform.position = new Vector2(pos.x, ingredient.Height * 0.2f - 2.55f);
         }
