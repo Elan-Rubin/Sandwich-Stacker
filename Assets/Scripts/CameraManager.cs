@@ -29,6 +29,11 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        _currentPosition = transform.position = Vector3.Lerp(CurrentPosition, TargetPosition, Time.deltaTime);
+        if (Vector2.Distance(_currentPosition, TargetPosition) > 0.01f)
+        {
+            _currentPosition = TargetPosition;
+            return;
+        }
+        else _currentPosition = transform.position = Vector3.Lerp(CurrentPosition, TargetPosition, Time.deltaTime);
     }
 }

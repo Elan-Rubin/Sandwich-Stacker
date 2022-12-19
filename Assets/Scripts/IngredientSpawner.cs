@@ -27,7 +27,6 @@ public class IngredientSpawner : MonoBehaviour
         return _spawning = !_spawning;
     }
 
-    private bool _waiting = false;
     void Update()
     {
         if(GameManager.Instance.InRound && _spawning) _timer += Time.deltaTime;
@@ -51,9 +50,9 @@ public class IngredientSpawner : MonoBehaviour
 
     private IEnumerator BreadLaunch()
     {
-        _breadLauncher.SetActive(_waiting = true);
+        _breadLauncher.SetActive(true);
         yield return new WaitForSeconds(2.2f);
-        _breadLauncher.SetActive(_waiting = false);
+        _breadLauncher.SetActive(false);
     }
 
     public void ResetSpawner()

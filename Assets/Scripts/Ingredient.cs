@@ -14,18 +14,18 @@ public class Ingredient : MonoBehaviour
     bool _badItem;
     float _timer;
     int _counter;
-    float _sinVal;
 
     private bool _landed;
-    private GameObject _ingredientBelow;
-    private Vector2 _currentPosition, _targetPosition;
-    private float _currentRotation, _targetRotation; //z rotation value
     private int _height;
     public int Height { get { return _height; } }
 
     void Start()
     {
         if (IngredientType.Equals(IngredientType.Bread)) GameManager.Instance.StallBread(gameObject);
+        transform.localScale = Vector2.zero;
+        var sequence = DOTween.Sequence()
+            .Append(transform.DOScale(Vector3.one,0.25f))
+            .Append(transform.DOPunchScale(Vector3.one * 0.25f, 0.25f));
     }
 
     public void AssignIngredientValues(IngredientScriptableObject ingredientValues)
@@ -73,7 +73,6 @@ public class Ingredient : MonoBehaviour
             _landedObject.SetActive(true);
             _landed = true;
 
-            //collision.gameObject.GetComponent<Rigidbody2D>().enabled = false; //this doesnt work
             foreach (Transform child in collision.transform)
                 child.GetComponent<Collider2D>().enabled = false;
             if(collision.gameObject.GetComponent<Collider2D>()) collision.gameObject.GetComponent<Collider2D>().enabled = false;
@@ -85,12 +84,6 @@ public class Ingredient : MonoBehaviour
             _height = collision.gameObject.GetComponent<Ingredient>() ? collision.gameObject.GetComponent<Ingredient>().Height + 1 : 1;
 
             transform.position = new Vector2(collision.transform.position.x, collision.transform.position.y + .2f);
-
-            _ingredientBelow = collision.gameObject;
-            
-            //transform.localPosition = new Vector2(0, -1f + .2f * _height);
-            //_currentRotation = 0;
-            //_currentPosition = transform.position;
 
             if (_height > 7) CameraManager.Instance.TargetPosition += new Vector3(0, 0.2f, 0);
 

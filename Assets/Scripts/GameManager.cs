@@ -290,7 +290,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator StallBreadCoroutine(GameObject bread)
     {
         bread.SetActive(false);
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1.75f);
         bread.SetActive(true);
     }
 }
