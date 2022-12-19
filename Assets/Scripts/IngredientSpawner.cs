@@ -15,6 +15,8 @@ public class IngredientSpawner : MonoBehaviour
 
     [SerializeField] private GameObject _breadLauncher;
 
+    [SerializeField] private float _timeToWait = 1f;
+
     void Start()
     {
 
@@ -29,7 +31,7 @@ public class IngredientSpawner : MonoBehaviour
     void Update()
     {
         if(GameManager.Instance.InRound && _spawning) _timer += Time.deltaTime;
-        if (_timer > 1f && _spawning)
+        if (_timer > _timeToWait && _spawning)
         {
             _ingredientCounter++;
             _timer = 0;
@@ -37,7 +39,7 @@ public class IngredientSpawner : MonoBehaviour
             var ingredientValues = (Random.Range(0f, 1f) > 0.2f)
                 ? _ingredients[Random.Range(0, _ingredients.Count)]
                 : _badIngredients[Random.Range(0, _badIngredients.Count)];
-            if (GameManager.Instance.SandwichSize > 5 && _ingredientCounter % 5 == 0)//this number will change
+            if (GameManager.Instance.SandwichSize > 5 && _ingredientCounter % 6 == 0)//this number will change
             {
                 StartCoroutine(nameof(BreadLaunch));
                 ingredientValues = _topBread;
@@ -52,5 +54,11 @@ public class IngredientSpawner : MonoBehaviour
         _breadLauncher.SetActive(_waiting = true);
         yield return new WaitForSeconds(2.2f);
         _breadLauncher.SetActive(_waiting = false);
+    }
+
+    public void ResetSpawner()
+    {
+        _timer = -1f;
+        _ingredientCounter = 0;
     }
 }

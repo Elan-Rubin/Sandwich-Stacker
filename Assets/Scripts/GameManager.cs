@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public int Score { get { return _score; } }
 
     public int SandwichSize;
+    [SerializeField] private Player _player;
     [Space(5)]
 
     [Header("Game UI")]
@@ -145,6 +146,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator StartRoundCoroutine()
     {
+        SandwichSize = 0;
+        _player.ResetPlayer();
+        _ingredientSpawner.ResetSpawner();
         _ingredientSpawner.Toggle();
         _roundStart = false;
         yield return null;
@@ -183,6 +187,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
 
         int ingredientCounter = 0;
+        int ingredientTotal = SandwichSize;
         sandwich.Reverse();
         foreach(var ingredient in sandwich)
         {
@@ -207,6 +212,7 @@ public class GameManager : MonoBehaviour
             ingredient.GetComponent<Ingredient>().Explode();
             //sandwich.Remove(ingredient);
             Destroy(ingredient.gameObject);
+            if(ingredientCounter <= SandwichSize - 7 && SandwichSize >= 7) CameraManager.Instance.TargetPosition -= new Vector3(0, 0.2f, 0);
             yield return new WaitForSeconds(0.25f);
         }
         //foreach (var ingredient in sandwich)
@@ -284,7 +290,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator StallBreadCoroutine(GameObject bread)
     {
         bread.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.25f);
         bread.SetActive(true);
     }
 }

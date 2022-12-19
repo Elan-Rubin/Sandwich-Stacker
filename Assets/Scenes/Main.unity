@@ -7753,6 +7753,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0d80667523fbaa845b9a9c84a72f40c3, type: 2}
   _topBread: {fileID: 11400000, guid: 5897563e0b9631c46b7f7a9de38c5c9e, type: 2}
   _breadLauncher: {fileID: 1776041960}
+  _timeToWait: 1
 --- !u!4 &1664202502
 Transform:
   m_ObjectHideFlags: 0
@@ -8207,7 +8208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1776041961
 Animator:
   serializedVersion: 4
@@ -8280,6 +8281,7 @@ MonoBehaviour:
   _round: 1
   _score: 0
   SandwichSize: 0
+  _player: {fileID: 847494667}
   _playButton: {fileID: 1496002733}
   _play: {fileID: 21300000, guid: c1fed0ab419e89643b7754b1045b0d91, type: 3}
   _pause: {fileID: 21300000, guid: 811a76eaf473c444d9074c86ef39e66c, type: 3}

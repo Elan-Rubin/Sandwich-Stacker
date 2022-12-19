@@ -73,10 +73,10 @@ public class Ingredient : MonoBehaviour
             _landedObject.SetActive(true);
             _landed = true;
 
-            Destroy(collision.gameObject.GetComponent<Rigidbody2D>());
+            //collision.gameObject.GetComponent<Rigidbody2D>().enabled = false; //this doesnt work
             foreach (Transform child in collision.transform)
-                Destroy(child.GetComponent<Collider2D>());
-            Destroy(collision.gameObject.GetComponent<Collider2D>());
+                child.GetComponent<Collider2D>().enabled = false;
+            if(collision.gameObject.GetComponent<Collider2D>()) collision.gameObject.GetComponent<Collider2D>().enabled = false;
             GetComponent<Rigidbody2D>().isKinematic = true;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             collision.gameObject.tag = "Untagged";

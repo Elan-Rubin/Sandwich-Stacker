@@ -70,4 +70,12 @@ public class Player : MonoBehaviour
         else if (paused) _timer += 0.001f;
         else _renderer.sprite = currentCycle[_counter = 0];
     }
+
+    public void ResetPlayer()
+    {
+        //transform.position = new Vector3(0, transform.position.y);
+        var plate = transform.GetChild(1).gameObject;
+        plate.GetComponent<Collider2D>().enabled = true;
+        plate.tag = "Sandwich";
+    }
 }
