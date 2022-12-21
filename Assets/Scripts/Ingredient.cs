@@ -70,6 +70,8 @@ public class Ingredient : MonoBehaviour
 
             transform.DOPunchScale(new Vector2(0.5f, 0f), 0.25f);
             GameManager.Instance.SandwichSize++;
+            GameManager.Instance.TotalCaught++;
+            GameManager.Instance.AddToCounter(IngredientType);
             IngredientManager.Instance.Sandwich.Add(this);
             transform.parent = IngredientManager.Instance.transform;
 
@@ -142,5 +144,14 @@ public struct IngredientCounter
     public void OnValidate()
     {
         name = $"{IngredientType}, {Counter}";
+    }
+    public void Increment() => Counter++;
+    public IngredientCounter(IngredientCounter ingredientCounter)
+    {
+        IngredientType = ingredientCounter.IngredientType;
+        Counter = ingredientCounter.Counter + 1;
+        Sprite = ingredientCounter.Sprite;
+        name = "";
+        OnValidate();
     }
 }

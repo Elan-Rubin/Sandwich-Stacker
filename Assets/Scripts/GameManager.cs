@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     public int Score { get { return _score; } }
 
     public int SandwichSize;
+    [HideInInspector] public int TotalCaught;
     [SerializeField] private Player _player;
     [Space(5)]
 
@@ -100,15 +102,36 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape)) PauseGame();
     }
-
+    private void LoseGame()
+    {
+        _losePanel.SetActive(true);
+        _roundEnd = true;
+        _flavorText4.text = _flavorTexts4[Random.Range(0, _flavorTexts4.Count)];
+        _ingredientsCaughtText.text = $"{string.Format("{0:n0}",TotalCaught)} ingredients caught";
+        _finalScoreText.text = $"final score: {string.Format("{0:n0}", _score)}";
+        var favs = _ingredientCounters.OrderByDescending(i => i.Counter).ToList();
+        for (int i = 0; i < _favs.Count; i++)
+        {
+            _favs[i].GetComponent<Image>().enabled = favs[i].Counter > 0; 
+            _favs[i].GetComponent<Image>().sprite = favs[i].Sprite;
+            _favs[i].GetComponent<RectTransform>().sizeDelta = favs[i].Sprite.bounds.size * 60f;
+        }
+    }
     public int IckyItemCaught()
     {
+        _ickCounter++;
+
+        if (_ickCounter == 3)
+        {
+            LoseGame();
+            return _ickCounter;
+        }
+
         StopCoroutine(nameof(IckyOverlay));
         StopCoroutine(nameof(IckMeterEffect));
         StartCoroutine(nameof(IckyOverlay));
         StartCoroutine(nameof(IckMeterEffect));
 
-        _ickCounter++;
         _ickMeter.DOValue(_ickCounter, 0.3f, true);
         //Image ickMeterImage = _ickMeter.transform.GetChild(1).GetChild(0).GetComponent<Image>();
         //Color previousColor = ickMeterImage.color;
@@ -132,7 +155,7 @@ public class GameManager : MonoBehaviour
         Image ickMeterImage = _ickMeter.transform.GetChild(1).GetChild(0).GetComponent<Image>();
         Color previousColor = ickMeterImage.color;
         var delayedFlash = DOTween.Sequence();
-        for (int i = 0; i < _ickCounter; i++)
+        for (int i = 0; i < 3; i++)
         {
             delayedFlash.Append(ickMeterImage.DOColor(Color.red, 0.2f).SetEase(Ease.InExpo));
             delayedFlash.AppendInterval(0.35f);
@@ -148,6 +171,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _startPanel.SetActive(false);
         _winPanel.SetActive(false);
+        _losePanel.SetActive(false);
         yield return new WaitForSeconds(1f);
         _sceneTransition.SetActive(false);
         StartCoroutine(nameof(StartRoundCoroutine));
@@ -155,6 +179,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator StartRoundCoroutine()
     {
+        _roundEnd = false;
         SandwichSize = 0;
         _player.ResetPlayer();
         _ingredientSpawner.ResetSpawner();
@@ -306,6 +331,16 @@ public class GameManager : MonoBehaviour
     private void OnValidate()
     {
         for (int i = 0; i < _ingredientCounters.Count; i++)
+        {
             _ingredientCounters[i].OnValidate();
+        }
+    }
+
+    public void AddToCounter(IngredientType type)
+    {
+        var index = _ingredientCounters.IndexOf(_ingredientCounters.Where(i => i.IngredientType.Equals(type)).ToList()[0]);
+        _ingredientCounters[index] = new IngredientCounter(_ingredientCounters[index]);
+        //_ingredientCounters.Where(i => i.IngredientType.Equals(type)).ToList()[0].Increment();
+        //_ingredientCounters.Single(i => i.IngredientType.Equals(type)).Counter++;
     }
 }
