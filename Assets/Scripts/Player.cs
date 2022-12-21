@@ -21,10 +21,12 @@ public class Player : MonoBehaviour
     [SerializeField] private List<Sprite> _walkCycle = new();
     [SerializeField] private List<Sprite> _pausedCycle = new();
     int _counter;
-    float _timer;
+    float _timer,_timer2;
 
     private GameObject _visual;
     private SpriteRenderer _renderer;
+
+    [HideInInspector] public float MomentumMultiplier, Momentum;
 
     private void Awake()
     {
@@ -47,6 +49,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (!GameManager.Instance.InRound) return;
+        if (MomentumMultiplier > 0) MomentumMultiplier -= Time.deltaTime;
+        else if (MomentumMultiplier < 0) MomentumMultiplier += Time.deltaTime;
         bool paused = GameManager.Instance.Paused;
         List<Sprite> currentCycle = !paused ? _walkCycle : _pausedCycle;
         if (_timer > 0.1f)
@@ -59,6 +63,11 @@ public class Player : MonoBehaviour
         Vector2 movementOffset = new(Input.GetAxisRaw(axisName: "Horizontal"), 0);
         movementOffset *= Time.deltaTime * _movementSpeed;
         bool direction = movementOffset.x > 0; //right = true, left = false
+        _timer2 += Time.deltaTime;
+        if (movementOffset.magnitude > 0)
+        {
+            MomentumMultiplier = direction ? 1 : -1;
+        }
 
         if ((transform.position.x > _maximumX && direction) || (transform.position.x < _minimumX && !direction))
         {
@@ -67,7 +76,10 @@ public class Player : MonoBehaviour
         }
         transform.Translate(movementOffset);
 
-        if (movementOffset.magnitude > 0 && !paused) _timer += Time.deltaTime;
+        if (movementOffset.magnitude > 0 && !paused)
+        {
+            _timer += Time.deltaTime;
+        }
         else if (paused) _timer += 0.001f;
         else _renderer.sprite = currentCycle[_counter = 0];
     }

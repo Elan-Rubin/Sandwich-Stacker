@@ -19,6 +19,8 @@ public class Ingredient : MonoBehaviour
     private int _height;
     public int Height { get { return _height; } }
 
+    [HideInInspector] public Vector2 CurrentPosition, TargetPosition; 
+
     void Start()
     {
         if (IngredientType.Equals(IngredientType.Bread)) GameManager.Instance.StallBread(gameObject);
@@ -65,6 +67,7 @@ public class Ingredient : MonoBehaviour
                 GameManager.Instance.IckyItemCaught();
                 return;
             }
+
             transform.DOPunchScale(new Vector2(0.5f, 0f), 0.25f);
             GameManager.Instance.SandwichSize++;
             IngredientManager.Instance.Sandwich.Add(this);
@@ -83,10 +86,10 @@ public class Ingredient : MonoBehaviour
             gameObject.tag = "Sandwich";
 
             _height = collision.gameObject.GetComponent<Ingredient>() ? collision.gameObject.GetComponent<Ingredient>().Height + 1 : 1;
-
+            CurrentPosition = new Vector2(collision.gameObject.transform.position.x, _height * 0.2f - 2.55f);
             transform.position = new Vector2(collision.transform.position.x, collision.transform.position.y + .2f);
 
-            if (_height > 7) CameraManager.Instance.TargetPosition += new Vector3(0, 0.2f, 0);
+            if (_height > 7 && _height < 30) CameraManager.Instance.TargetPosition += new Vector3(0, 0.2f, 0);
 
             if (IngredientType.Equals(IngredientType.Bread))
                 GameManager.Instance.EndRound();
@@ -128,4 +131,16 @@ public enum IngredientType
     Eye,
     Fish,
     Mushroom,
+}
+[System.Serializable]
+public struct IngredientCounter
+{
+    [SerializeField][HideInInspector] private string name;
+    public IngredientType IngredientType;
+    public int Counter;
+    public Sprite Sprite;
+    public void OnValidate()
+    {
+        name = $"{IngredientType}, {Counter}";
+    }
 }

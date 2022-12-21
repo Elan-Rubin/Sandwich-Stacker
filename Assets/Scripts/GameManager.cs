@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _startPanel;
     [SerializeField] private GameObject _winPanel;
     [SerializeField] private GameObject _losePanel;
+    [SerializeField] private GameObject _loadingPanel;
     [Space(5)]
 
     [Header("End Round")]
@@ -64,10 +65,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _pointsAdded;
     [SerializeField] private GameObject _sceneTransition;
     [SerializeField] private TextMeshProUGUI _flavorText1, _flavorText2, _levelText2, _scoreText2;
-    [SerializeField] private List<string> _flavorTexts1 = new();
-    [SerializeField] private List<string> _flavorTexts2 = new();
-    [SerializeField] private List<string> _flavorTexts3 = new();
+    [SerializeField] private List<string> _flavorTexts1 = new(), _flavorTexts2 = new(), _flavorTexts3 = new(), _flavorTexts4 = new();
     private int[] _scores = new int[] { 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 150, 200, 250, 300, 350, 400, 500 };
+    [Space(5)]
+
+    [Header("Lose")]
+    [SerializeField] private TextMeshProUGUI _flavorText4;
+    [SerializeField] private TextMeshProUGUI _finalScoreText, _ingredientsCaughtText;
+    [SerializeField] private List<IngredientCounter> _ingredientCounters = new();
+    [SerializeField] private List<GameObject> _favs = new();
 
     private void Awake()
     {
@@ -86,6 +92,7 @@ public class GameManager : MonoBehaviour
     public bool InRound { get { return !_roundEnd && !_roundStart; } }
     void Start()
     {
+        _loadingPanel.SetActive(true);
         _startPanel.SetActive(true);
     }
 
@@ -294,5 +301,11 @@ public class GameManager : MonoBehaviour
         bread.SetActive(false);
         yield return new WaitForSeconds(1.75f);
         bread.SetActive(true);
+    }
+
+    private void OnValidate()
+    {
+        for (int i = 0; i < _ingredientCounters.Count; i++)
+            _ingredientCounters[i].OnValidate();
     }
 }
