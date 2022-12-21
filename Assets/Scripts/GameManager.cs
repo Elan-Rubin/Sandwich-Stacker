@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
             ingredient.GetComponent<Ingredient>().Explode();
             //sandwich.Remove(ingredient);
             Destroy(ingredient.gameObject);
-            if (ingredientCounter <= SandwichSize - 7 && SandwichSize >= 7) CameraManager.Instance.TargetPosition -= new Vector3(0, 0.2f, 0);
+            if (ingredientCounter <= SandwichSize - 7 && SandwichSize >= 7 && ingredientCounter <= 23) CameraManager.Instance.TargetPosition -= new Vector3(0, 0.2f, 0);
             yield return new WaitForSeconds(0.25f);
         }
         //foreach (var ingredient in sandwich)

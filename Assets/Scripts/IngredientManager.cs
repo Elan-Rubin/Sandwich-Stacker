@@ -45,8 +45,13 @@ public class IngredientManager : MonoBehaviour
             if (i == 0) ingredientBeforePos = ingredient.TargetPosition = new Vector2(pos.x, ingredient.Height * 0.2f - 2.55f);
             else ingredientBeforePos = ingredient.TargetPosition = new Vector2(Vector2.Lerp(ingredient.CurrentPosition, ingredientBeforePos, 0.90f).x, ingredient.Height * 0.2f - 2.55f);
 
-            if (i == 0) ingredient.CurrentPosition = ingredient.transform.position = new Vector2(pos.x, ingredient.Height * 0.2f - 2.55f);
-            else ingredient.CurrentPosition = ingredient.transform.position = Vector2.Lerp(ingredient.CurrentPosition, ingredient.TargetPosition, Time.deltaTime * 10f);
+            ingredient.TargetPosition += Vector2.right * 2f* Player.Instance.Momentum / (50f - Mathf.Clamp(i, 0, 49));
+            if (i == 0) ingredient.CurrentPosition = ingredient.transform.position = Vector2.Lerp(ingredient.CurrentPosition, new Vector2(pos.x, ingredient.Height * 0.2f - 2.55f), Time.deltaTime * 40f);
+            float lerpMultiplier = 0;
+            if (ingredient.Height > 30)
+                lerpMultiplier = 10f - .5f * (Mathf.Abs(30 - ingredient.Height));
+            else lerpMultiplier = Mathf.Clamp(40f - ingredient.Height, 10, 40);
+            if (i != 0) ingredient.CurrentPosition = ingredient.transform.position = Vector2.Lerp(ingredient.CurrentPosition, ingredient.TargetPosition, Time.deltaTime * lerpMultiplier);
 
             i++;
         }

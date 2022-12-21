@@ -67,7 +67,9 @@ public class Player : MonoBehaviour
         if (movementOffset.magnitude > 0)
         {
             MomentumMultiplier = direction ? 1 : -1;
+            _timer2 = direction ? 0 : 1;
         }
+        Momentum = -Mathf.Sin(_timer2 * Mathf.PI / 2);
 
         if ((transform.position.x > _maximumX && direction) || (transform.position.x < _minimumX && !direction))
         {
